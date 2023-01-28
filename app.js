@@ -11,7 +11,6 @@ const multiplyOJ = document.querySelector("#mutiplay")
 const divideOJ = document.querySelector("#divide")
 count = 0
 let idy;
-
 const operations = {
     plus(x, y) {
         return ((Number(x) + Number(y)) * 100) / 100
@@ -54,9 +53,12 @@ num.forEach((item) => {
 
 
         }
+        able = false
+        disable(able)
 
 
     }
+
 
     item.addEventListener("click", action)
 
@@ -75,6 +77,8 @@ op.forEach((item) => {
 })
 function deploy(e) {
     point.disabled = false
+    able = true
+    disable(able)
 
 
     if (count < 1) {
@@ -108,6 +112,8 @@ function deploy(e) {
 
 
 function answer(num1, num2, idy) {
+    able = false
+    disable(able)
 
     if (idy === "divide") {
         let ans = operations.divide(num1, num2)
@@ -162,4 +168,25 @@ clear.addEventListener("click", () => {
         ary.pop()
     }
     count = 0
-}) 
+    point.disabled = false
+    able = true
+    disable(able)
+})
+
+// button disable
+function disable(able) {
+    if (able === false) {
+        plusOJ.disabled = false
+        multiplyOJ.disabled = false
+        minusOj.disabled = false
+        divideOJ.disabled = false
+    }
+    else {
+        plusOJ.disabled = true
+        multiplyOJ.disabled = true
+        minusOj.disabled = true
+        divideOJ.disabled = true
+    }
+}
+let able = true
+disable(able)
