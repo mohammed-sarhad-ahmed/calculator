@@ -10,21 +10,22 @@ const plusOJ = document.querySelector("#plus")
 const multiplyOJ = document.querySelector("#mutiplay")
 const divideOJ = document.querySelector("#divide")
 count = 0
+let idy;
 
 const operations = {
     plus(x, y) {
-        return Number(x) + Number(y)
+        return (Math.round(Number(x) + Number(y)) * 100) / 100
     },
     minus(x, y) {
-        return Number(x) - Number(y)
+        return (Math.round(Number(x) - Number(y)) * 100) / 100
     },
 
     multi(x, y) {
-        return Number(x) * Number(y)
+        return (Math.round(Number(x) * Number(y)) * 100) / 100
     },
     divide(x, y) {
 
-        return Number(x) / Number(y)
+        return (Math.round(Number(x) / Number(y)) * 100) / 100
 
 
     }
@@ -34,31 +35,34 @@ const num = [...numbers]
 const op = [...operators]
 
 num.forEach((item) => {
-    item.removeEventListener("click", action)
+    function action(e) {
+
+        if (screen.innerText.length === 1 && screen.innerText == 0) {
+
+            screen.innerText = ""
+        }
+
+        value = e.target.innerText
+        if (e.target.innerText === ".") {
+            point.disabled = true
+
+        }
+        screen.innerText += value
+
+        if (screen.innerText.length <= 1 && screen.innerText != 0) {
+            clear.innerText = `C`
+
+
+        }
+
+
+    }
+
     item.addEventListener("click", action)
+    // item.removeEventListener("click",action)
+
 })
-function action(e) {
 
-    if (screen.innerText.length === 1 && screen.innerText == 0) {
-
-        screen.innerText = ""
-    }
-
-    value = e.target.innerText
-    if (e.target.innerText === ".") {
-        point.disabled = true
-
-    }
-    screen.innerText += value
-
-    if (screen.innerText.length <= 1 && screen.innerText != 0) {
-        clear.innerText = `C`
-
-
-    }
-
-
-}
 
 
 
@@ -67,20 +71,25 @@ function action(e) {
 
 
 op.forEach((item) => {
-    item.removeEventListener("click", deploy)
     item.addEventListener("click", deploy)
+    // item.removeEventListener("click", deploy)
+
+
+
 
 
 })
 function deploy(e) {
+
 
     if (count < 1) {
         ary.push(screen.innerText)
         count++
     }
     screen.innerText = 0
-    let idy = e.target.id
-    assign.removeEventListener("click", finalassis)
+    idy = e.target.id
+
+
     assign.addEventListener("click", finalassis)
 
     function finalassis(e) {
@@ -89,6 +98,7 @@ function deploy(e) {
         let [x, y] = ary
         console.log(x, y)
         answer(x, y, idy)
+        assign.removeEventListener("click", finalassis)
     }
 
 
@@ -151,4 +161,5 @@ clear.addEventListener("click", () => {
     while (ary.length) {
         ary.pop()
     }
-})
+    count = 0
+}) 
