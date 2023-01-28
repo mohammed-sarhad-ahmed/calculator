@@ -14,18 +14,18 @@ let idy;
 
 const operations = {
     plus(x, y) {
-        return (Math.round(Number(x) + Number(y)) * 100) / 100
+        return ((Number(x) + Number(y)) * 100) / 100
     },
     minus(x, y) {
-        return (Math.round(Number(x) - Number(y)) * 100) / 100
+        return ((Number(x) - Number(y)) * 100) / 100
     },
 
     multi(x, y) {
-        return (Math.round(Number(x) * Number(y)) * 100) / 100
+        return ((Number(x) * Number(y)) * 100) / 100
     },
     divide(x, y) {
 
-        return (Math.round(Number(x) / Number(y)) * 100) / 100
+        return ((Number(x) / Number(y)) * 100) / 100
 
 
     }
@@ -59,7 +59,6 @@ num.forEach((item) => {
     }
 
     item.addEventListener("click", action)
-    // item.removeEventListener("click",action)
 
 })
 
@@ -72,14 +71,10 @@ num.forEach((item) => {
 
 op.forEach((item) => {
     item.addEventListener("click", deploy)
-    // item.removeEventListener("click", deploy)
-
-
-
-
 
 })
 function deploy(e) {
+    point.disabled = false
 
 
     if (count < 1) {
@@ -116,7 +111,8 @@ function answer(num1, num2, idy) {
 
     if (idy === "divide") {
         let ans = operations.divide(num1, num2)
-        screen.innerText = ans
+        let value = Math.round((ans + Number.EPSILON) * 100) / 100
+        screen.innerText = value
         while (ary.length) {
             ary.pop()
         }
@@ -125,27 +121,31 @@ function answer(num1, num2, idy) {
 
     else if (idy === "plus") {
         let ans = operations.plus(num1, num2)
-        screen.innerText = ans
+        let value = Math.round((ans + Number.EPSILON) * 100) / 100
+        screen.innerText = value
         while (ary.length) {
             ary.pop()
         }
+
         ary.push(ans)
 
     }
     else if (idy === "mutiplay") {
         let ans = operations.multi(num1, num2)
-        screen.innerText = ans
+        let value = Math.round((ans + Number.EPSILON) * 100) / 100
+        screen.innerText = value
         while (ary.length) {
             ary.pop()
         }
 
         ary.push(ans)
-        console.log(ary)
+
 
     }
     else if (idy === "minus") {
         let ans = operations.minus(num1, num2)
-        screen.innerText = ans
+        let value = Math.round((ans + Number.EPSILON) * 100) / 100
+        screen.innerText = value
         while (ary.length) {
             ary.pop()
         }
