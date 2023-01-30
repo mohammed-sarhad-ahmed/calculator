@@ -1,3 +1,4 @@
+//declaration
 const screen = document.querySelector("#screen p")
 const numbers = document.querySelectorAll(".numbers")
 const clear = document.querySelector("#clear")
@@ -5,13 +6,13 @@ const point = document.querySelector("#point")
 const operators = document.querySelectorAll(".oparators")
 const assign = document.querySelector("#assgiment")
 const ary = []
-const minusOj = document.querySelector("#minus")
-const plusOJ = document.querySelector("#plus")
-const multiplyOJ = document.querySelector("#mutiplay")
-const divideOJ = document.querySelector("#divide")
-count = 0
-let idy;
-const operations = {
+let currentOperator
+let answer;
+let count = 0
+let shower = 0
+let evaluator = 0
+//evaluate 2 values and return answer 
+const doOperations = {
     plus(x, y) {
         return ((Number(x) + Number(y)) * 100) / 100
     },
@@ -29,164 +30,91 @@ const operations = {
 
     }
 }
+//it convert numbers and operators nodelist to an array so that we can use array methods on it
+const allNumbers = [...numbers]
+const allOperates = [...operators]
+//when you click a number call a function to save the number
+allNumbers.forEach((number) => {
+    number.addEventListener("click", getNumbers)
+})
 
-const num = [...numbers]
-const op = [...operators]
-
-num.forEach((item) => {
-    function action(e) {
-
-        if (screen.innerText.length === 1 && screen.innerText == 0) {
-
-            screen.innerText = ""
-        }
-
-        value = e.target.innerText
-        if (e.target.innerText === ".") {
-            point.disabled = true
-
-        }
-        screen.innerText += value
-
-        if (screen.innerText.length <= 1 && screen.innerText != 0) {
-            clear.innerText = `C`
-
-
-        }
-        able = false
-        disable(able)
-
-
+function getNumbers(e) {
+    if (screen.innerText.length === 1 && screen.innerText == 0) {
+        screen.innerText = ""
     }
-
-
-    item.addEventListener("click", action)
-
-})
-
-
-
-
-
-
-
-
-op.forEach((item) => {
-    item.addEventListener("click", deploy)
-
-})
-function deploy(e) {
-    point.disabled = false
-    able = true
-    disable(able)
-
-
-    if (count < 1) {
+    if (shower === 1) {
+        screen.innerText = ""
+        shower = 0
+    }
+    screen.innerText += e.target.dataset.value
+    if (ary.length === 1) {
         ary.push(screen.innerText)
+    }
+    if (ary.length === 2) {
         count++
+        let [x, y] = ary;
+        doEvaluation(x, y, currentOperator)
     }
-    screen.innerText = 0
-    idy = e.target.id
 
-
-    assign.addEventListener("click", finalassis)
-
-    function finalassis(e) {
+}
+//when you click a operator call a function to save the operator
+allOperates.forEach((operator) => {
+    operator.addEventListener("click", getOperator)
+})
+function getOperator(e) {
+    if (count === 0) {
         ary.push(screen.innerText)
-        console.log(ary)
-        let [x, y] = ary
-        console.log(x, y)
-        answer(x, y, idy)
-        assign.removeEventListener("click", finalassis)
+    }
+    evaluator++
+
+    if (evaluator === 2) {
+        screen.innerText = Math.round(answer * 100) / 100
+        evaluator = 0
     }
 
 
-
+    shower++
+    currentOperator = e.target.id
 }
 
+//help to do the operation when we have 2 number in the array
+function doEvaluation(num1, num2, currentOperator) {
 
-
-
-
-
-
-
-function answer(num1, num2, idy) {
-    able = false
-    disable(able)
-
-    if (idy === "divide") {
-        let ans = operations.divide(num1, num2)
-        let value = Math.round((ans + Number.EPSILON) * 100) / 100
-        screen.innerText = value
-        while (ary.length) {
-            ary.pop()
-        }
-        ary.push(ans)
+    if (currentOperator === "divide") {
+        answer = doOperations.divide(num1, num2)
     }
-
-    else if (idy === "plus") {
-        let ans = operations.plus(num1, num2)
-        let value = Math.round((ans + Number.EPSILON) * 100) / 100
-        screen.innerText = value
-        while (ary.length) {
-            ary.pop()
-        }
-
-        ary.push(ans)
-
+    else if (currentOperator === "minus") {
+        answer = doOperations.minus(num1, num2)
     }
-    else if (idy === "mutiplay") {
-        let ans = operations.multi(num1, num2)
-        let value = Math.round((ans + Number.EPSILON) * 100) / 100
-        screen.innerText = value
-        while (ary.length) {
-            ary.pop()
-        }
-
-        ary.push(ans)
-
-
+    else if (currentOperator === "plus") {
+        answer = doOperations.plus(num1, num2)
     }
-    else if (idy === "minus") {
-        let ans = operations.minus(num1, num2)
-        let value = Math.round((ans + Number.EPSILON) * 100) / 100
-        screen.innerText = value
-        while (ary.length) {
-            ary.pop()
-        }
-        ary.push(ans)
-
+    else if (currentOperator === "mutiplay") {
+        answer = doOperations.multi(num1, num2)
     }
-}
-
-//clear
-clear.addEventListener("click", () => {
-    screen.innerText = 0
-    clear.innerText = "AC"
     while (ary.length) {
         ary.pop()
     }
-    count = 0
-    point.disabled = false
-    able = true
-    disable(able)
+   
+    ary.push(Math.round(answer * 100) / 100)
+
+}
+// if you click = it will show you the answer
+assign.addEventListener("click", () => {
+    screen.innerText = Math.round(answer * 100) / 100
+    evaluator = 0
+
 })
 
-// button disable
-function disable(able) {
-    if (able === false) {
-        plusOJ.disabled = false
-        multiplyOJ.disabled = false
-        minusOj.disabled = false
-        divideOJ.disabled = false
+
+//clear
+clear.addEventListener("click", () => {
+    answer = 0
+    count = 0
+    while (ary.length) {
+        ary.pop()
     }
-    else {
-        plusOJ.disabled = true
-        multiplyOJ.disabled = true
-        minusOj.disabled = true
-        divideOJ.disabled = true
-    }
-}
-let able = true
-disable(able)
+    screen.innerText = 0
+    shower = 0
+    evaluator = 0
+})
