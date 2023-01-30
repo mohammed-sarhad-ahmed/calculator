@@ -16,6 +16,7 @@ let plusOj = document.querySelector("#plus")
 let minusOj = document.querySelector("#minus")
 let multiplyOj = document.querySelector("#mutiplay")
 let divideOJ = document.querySelector("#divide")
+let sign = document.querySelector("#negativetopositive")
 //evaluate 2 values and return answer 
 const doOperations = {
     plus(x, y) {
@@ -41,8 +42,8 @@ allNumbers.forEach((number) => {
     number.addEventListener("click", getNumbers)
 })
 function getNumbers(e) {
-   
-       
+
+
     if (screen.innerText.length === 1 && screen.innerText == 0 && e.target.innerText !== ".") {
         screen.innerText = ""
     }
@@ -203,3 +204,15 @@ function getBackgroundColor() {
         divideOJ.style.color = "white"
     }
 }
+//change sign
+sign.addEventListener("click", getSign)
+function getSign(e) {
+    if (screen.innerText !== 0 && !(isNaN(screen.innerText))) {
+        screen.innerText = `${screen.innerText * -1}`
+        ary.pop()
+        ary.push(screen.innerText)
+    }
+
+
+}
+
