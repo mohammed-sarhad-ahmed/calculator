@@ -11,9 +11,14 @@ let answer;
 let count = 0
 let shower = 0
 let evaluator = 0
+let plusOj = document.querySelector("#plus")
+let minusOj = document.querySelector("#minus")
+let multiplyOj = document.querySelector("#mutiplay")
+let divideOJ = document.querySelector("#divide")
 //evaluate 2 values and return answer 
 const doOperations = {
     plus(x, y) {
+
         return ((Number(x) + Number(y)) * 100) / 100
     },
     minus(x, y) {
@@ -24,10 +29,7 @@ const doOperations = {
         return ((Number(x) * Number(y)) * 100) / 100
     },
     divide(x, y) {
-
         return ((Number(x) / Number(y)) * 100) / 100
-
-
     }
 }
 //it convert numbers and operators nodelist to an array so that we can use array methods on it
@@ -37,46 +39,67 @@ const allOperates = [...operators]
 allNumbers.forEach((number) => {
     number.addEventListener("click", getNumbers)
 })
-
 function getNumbers(e) {
-    if (screen.innerText.length === 1 && screen.innerText == 0) {
+    if (screen.innerText.length === 1 && screen.innerText == 0 && e.target.innerText !== ".") {
         screen.innerText = ""
+    }
+    if (e.target.innerText === ".") {
+        point.disabled = true
     }
     if (shower === 1) {
         screen.innerText = ""
         shower = 0
     }
-    screen.innerText += e.target.dataset.value
-    if (ary.length === 1) {
-        ary.push(screen.innerText)
+    if (answer !== Infinity) {
+        state = false
+        disable(state)
+        screen.innerText += e.target.dataset.value
+        if (ary.length === 1) {
+            ary.push(screen.innerText)
+        }
+        if (ary.length === 2) {
+            count++
+            let [x, y] = ary;
+            doEvaluation(x, y, currentOperator)
+        }
     }
-    if (ary.length === 2) {
-        count++
-        let [x, y] = ary;
-        doEvaluation(x, y, currentOperator)
+    else if (answer == Infinity) {
+        screen.innerText = "you broke math"
+        evaluator = 0
+        shower = 0
+        evaluator = 0
+        count = 0
     }
-
 }
 //when you click a operator call a function to save the operator
 allOperates.forEach((operator) => {
     operator.addEventListener("click", getOperator)
 })
 function getOperator(e) {
-    if (count === 0) {
-        ary.push(screen.innerText)
-    }
-    evaluator++
-
-    if (evaluator === 2) {
-        screen.innerText = Math.round(answer * 100) / 100
+    if (answer == Infinity) {
+        screen.innerText = "you broke math"
         evaluator = 0
+        shower = 0
+        evaluator = 0
+        count = 0
     }
+    else {
+        point.disabled = false
+        if (count === 0) {
+            ary.push(screen.innerText)
+        }
+        evaluator++
 
-
-    shower++
-    currentOperator = e.target.id
+        if (evaluator === 2) {
+            screen.innerText = Math.round(answer * 100) / 100
+            evaluator = 0
+        }
+        shower++
+        currentOperator = e.target.id
+        state = true
+        disable(state)
+    }
 }
-
 //help to do the operation when we have 2 number in the array
 function doEvaluation(num1, num2, currentOperator) {
 
@@ -95,26 +118,55 @@ function doEvaluation(num1, num2, currentOperator) {
     while (ary.length) {
         ary.pop()
     }
-   
+    state = false
+    disable(state)
     ary.push(Math.round(answer * 100) / 100)
-
+    assign.disabled = false;
 }
 // if you click = it will show you the answer
 assign.addEventListener("click", () => {
-    screen.innerText = Math.round(answer * 100) / 100
-    evaluator = 0
-
+    if (answer == Infinity) {
+        screen.innerText = "you broke math"
+        evaluator = 0
+    }
+    else {
+        screen.innerText = Math.round(answer * 100) / 100
+        evaluator = 0
+    }
 })
-
-
 //clear
-clear.addEventListener("click", () => {
-    answer = 0
+clear.addEventListener("click", clearer)
+function clearer() {
     count = 0
     while (ary.length) {
         ary.pop()
     }
+    state = true
+    disable(state)
     screen.innerText = 0
+    answer = 0
     shower = 0
-    evaluator = 0
-})
+    evaluator = 0 
+    assign.disabled = true;
+}
+//disable button
+function disable(state) {
+    if (state === true) {
+
+        plusOj.disabled = true
+        minusOj.disabled = true
+        multiplyOj.disabled = true
+        divideOJ.disabled = true
+    }
+    else {
+
+        plusOj.disabled = false
+        minusOj.disabled = false
+        multiplyOj.disabled = false
+        divideOJ.disabled = false
+    }
+}
+let state = true
+disable(state)
+//assignment disabler
+assign.disabled = true;
