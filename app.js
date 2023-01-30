@@ -41,6 +41,8 @@ allNumbers.forEach((number) => {
     number.addEventListener("click", getNumbers)
 })
 function getNumbers(e) {
+   
+       
     if (screen.innerText.length === 1 && screen.innerText == 0 && e.target.innerText !== ".") {
         screen.innerText = ""
     }
@@ -85,14 +87,16 @@ function getOperator(e) {
         count = 0
     }
     else {
-        e.target.style.backgroundColor = "white"
-        e.target.style.color = "orange"
+        if (e.target.id !== "negativetopositive") {
+            e.target.style.backgroundColor = "white"
+            e.target.style.color = "orange"
+        }
+
         point.disabled = false
         if (count === 0) {
             ary.push(screen.innerText)
         }
         evaluator++
-        console.log(evaluator)
 
         if (evaluator === 2 || (secondEvaluator === 1 && evaluator === 1)) {
             screen.innerText = Math.round(answer * 100) / 100

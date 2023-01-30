@@ -46,6 +46,11 @@ button {
     font-size: 30px;
     flex-shrink: 0;
 
+
+}
+
+button:hover {
+    background-color: blueviolet;
 }
 
 button:nth-of-type(4n),
@@ -72,4 +77,14 @@ button:nth-of-type(4n),
 
 .first.gray button:nth-of-type(4) {
     background-color: orange;
+}
+
+#clear:hover,
+#negativetopositive:hover,
+#delete:hover {
+    background-color: red;
+}
+
+.oparators:hover,#divide:hover,#assgiment:hover{
+    background-color: aquamarine;
 }
