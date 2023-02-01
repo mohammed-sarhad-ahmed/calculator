@@ -14,7 +14,6 @@ let evaluator = 0
 let secondEvaluator = 0
 let temp;
 let dump;
-
 let plusOj = document.querySelector("#plus")
 let minusOj = document.querySelector("#minus")
 let multiplyOj = document.querySelector("#mutiplay")
@@ -51,14 +50,20 @@ function getNumbers(e) {
     if ((screen.innerText.length === 1 && screen.innerText == 0 && e.target.innerText !== ".")) {
         screen.innerText = ""
     }
-    
+   
+
     if (e.target.innerText === ".") {
         point.disabled = true
     }
+
     if (shower === 1) {
         screen.innerText = ""
         shower = 0
     }
+    if (e.target.innerText === ".") {
+        screen.innerText = 0.
+    }
+
     if (answer == Infinity) {
         screen.innerText = "you broke math"
         evaluator = 0
@@ -114,9 +119,9 @@ allOperates.forEach((operator) => {
 })
 function getOperator(e) {
     allNumbers.forEach((number) => {
-        number.disabled=false
+        number.disabled = false
     })
-    sign.disabled=true
+    sign.disabled = true
     if (answer == Infinity) {
         screen.innerText = "you broke math"
         evaluator = 0
