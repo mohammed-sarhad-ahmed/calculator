@@ -20,6 +20,7 @@ let multiplyOj = document.querySelector("#mutiplay")
 let divideOJ = document.querySelector("#divide")
 let sign = document.querySelector("#negativetopositive")
 let tempOp;
+let cope = 0
 //evaluate 2 values and return answer 
 const doOperations = {
     plus(x, y) {
@@ -61,9 +62,9 @@ function getNumbers(e) {
         screen.innerText = ""
         shower = 0
     }
-    if (e.target.innerText === ".") {
-        screen.innerText = 0.
-    }
+
+
+
 
     if (answer == Infinity) {
         screen.innerText = "you broke math"
@@ -74,6 +75,10 @@ function getNumbers(e) {
 
     else if (answer !== Infinity) {
         screen.innerText += e.target.dataset.value
+        if (screen.innerText === ".") {
+            console.log("gay")
+            screen.innerText = "0."
+        }
 
         if (screen.innerText != 0) {
             sign.disabled = false
@@ -97,11 +102,10 @@ function getNumbers(e) {
                     ary.push(z)
                     ary.push(e)
                 }
-
                 count++
-                console.log(ary)
                 let [x, y] = ary;
                 assign.removeEventListener("click", getsecondsNumber)
+
                 doEvaluation(x, y, currentOperator)
 
 
@@ -147,9 +151,7 @@ function getOperator(e) {
                         ary.push(z)
                         ary.push(e)
                     }
-
                     count++
-                    console.log(ary)
                     let [x, y] = ary;
                     assign.removeEventListener("click", getsecondsNumber)
                     doEvaluation(x, y, currentOperator)
@@ -157,6 +159,7 @@ function getOperator(e) {
             }
             secondEvaluator = 0
             tempOp = 0
+
             getsecondsNumber()
         }
         point.disabled = false
@@ -218,6 +221,7 @@ function display() {
         evaluator = 0
         allNumbers.forEach((number) => {
             number.disabled = true
+
         })
 
     }
@@ -244,7 +248,8 @@ function clearer() {
     allNumbers.forEach((number) => {
         number.disabled = false
     })
-    tempOp=0
+    tempOp = 0
+    cope = 0
 }
 //disable button
 function disable(state) {
