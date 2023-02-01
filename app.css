@@ -1,3 +1,8 @@
+html {
+    text-align: center;
+    font-family: monospace;
+}
+
 body {
     margin: 0px;
     background-color: #000;
@@ -85,6 +90,8 @@ button:nth-of-type(4n),
     background-color: red;
 }
 
-.oparators:hover,#divide:hover,#assgiment:hover{
+.oparators:hover,
+#divide:hover,
+#assgiment:hover {
     background-color: aquamarine;
 }

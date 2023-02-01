@@ -12,6 +12,9 @@ let count = 0
 let shower = 0
 let evaluator = 0
 let secondEvaluator = 0
+let temp;
+let dump;
+
 let plusOj = document.querySelector("#plus")
 let minusOj = document.querySelector("#minus")
 let multiplyOj = document.querySelector("#mutiplay")
@@ -43,10 +46,12 @@ allNumbers.forEach((number) => {
 })
 function getNumbers(e) {
 
-
-    if (screen.innerText.length === 1 && screen.innerText == 0 && e.target.innerText !== ".") {
+    state = false
+    disable(state)
+    if ((screen.innerText.length === 1 && screen.innerText == 0 && e.target.innerText !== ".")) {
         screen.innerText = ""
     }
+    
     if (e.target.innerText === ".") {
         point.disabled = true
     }
@@ -54,32 +59,64 @@ function getNumbers(e) {
         screen.innerText = ""
         shower = 0
     }
-    if (answer !== Infinity) {
-        state = false
-        disable(state)
-        screen.innerText += e.target.dataset.value
-        if (ary.length === 1) {
-            ary.push(screen.innerText)
-        }
-        if (ary.length === 2) {
-            count++
-            let [x, y] = ary;
-            doEvaluation(x, y, currentOperator)
-        }
-    }
-    else if (answer == Infinity) {
+    if (answer == Infinity) {
         screen.innerText = "you broke math"
         evaluator = 0
         shower = 0
-        evaluator = 0
         count = 0
     }
+
+    else if (answer !== Infinity) {
+        screen.innerText += e.target.dataset.value
+
+        if (screen.innerText != 0) {
+            sign.disabled = false
+        }
+        if (ary.length >= 1) {
+            ary.push(screen.innerText)
+            assign.disabled = false;
+        }
+
+
+        function getsecondsNumber() {
+            if (ary.length >= 2) {
+                if (ary.length > 2) {
+                    temp = ary.slice(0)
+                    dump = ary.slice(-1)
+                    while (ary.length) {
+                        ary.pop()
+                    }
+                    let [z] = temp;
+                    let [e] = dump;
+                    ary.push(z)
+                    ary.push(e)
+                }
+
+                count++
+                console.log(ary)
+                let [x, y] = ary;
+                assign.removeEventListener("click", getsecondsNumber)
+                doEvaluation(x, y, currentOperator)
+
+            }
+
+        }
+
+    }
+    assign.addEventListener("click", getsecondsNumber)
 }
+
+
+
 //when you click a operator call a function to save the operator
 allOperates.forEach((operator) => {
     operator.addEventListener("click", getOperator)
 })
 function getOperator(e) {
+    allNumbers.forEach((number) => {
+        number.disabled=false
+    })
+    sign.disabled=true
     if (answer == Infinity) {
         screen.innerText = "you broke math"
         evaluator = 0
@@ -92,18 +129,11 @@ function getOperator(e) {
             e.target.style.backgroundColor = "white"
             e.target.style.color = "orange"
         }
-
         point.disabled = false
         if (count === 0) {
             ary.push(screen.innerText)
         }
         evaluator++
-
-        if (evaluator === 2 || (secondEvaluator === 1 && evaluator === 1)) {
-            screen.innerText = Math.round(answer * 100) / 100
-            evaluator = 0
-            secondEvaluator = 0
-        }
         shower++
         currentOperator = e.target.id
         state = true
@@ -132,27 +162,31 @@ function doEvaluation(num1, num2, currentOperator) {
     while (ary.length) {
         ary.pop()
     }
-    secondEvaluator++
+
     state = false
     disable(state)
     ary.push(Math.round(answer * 100) / 100)
-    assign.disabled = false;
-    getBackgroundColor()
+
+    display()
 }
 // if you click = it will show you the answer
-assign.addEventListener("click", () => {
+function display() {
     getBackgroundColor()
     if (answer == Infinity) {
         screen.innerText = "you broke math"
         evaluator = 0
-        secondEvaluator = 0
     }
     else {
         screen.innerText = Math.round(answer * 100) / 100
         evaluator = 0
-        secondEvaluator = 0
+        allNumbers.forEach((number) => {
+            number.disabled = true
+        })
+
     }
-})
+
+}
+
 //clear
 clear.addEventListener("click", clearer)
 function clearer() {
@@ -168,7 +202,7 @@ function clearer() {
     evaluator = 0
     assign.disabled = true;
     getBackgroundColor()
-    secondEvaluator = 0
+    sign.disabled = true
 
 }
 //disable button
@@ -204,7 +238,8 @@ function getBackgroundColor() {
         divideOJ.style.color = "white"
     }
 }
-//change sign
+// change sign
+sign.disabled = true
 sign.addEventListener("click", getSign)
 function getSign(e) {
     if (screen.innerText !== 0 && !(isNaN(screen.innerText))) {
@@ -212,7 +247,4 @@ function getSign(e) {
         ary.pop()
         ary.push(screen.innerText)
     }
-
-
 }
-
