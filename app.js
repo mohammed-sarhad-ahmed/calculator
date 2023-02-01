@@ -19,6 +19,7 @@ let minusOj = document.querySelector("#minus")
 let multiplyOj = document.querySelector("#mutiplay")
 let divideOJ = document.querySelector("#divide")
 let sign = document.querySelector("#negativetopositive")
+let tempOp;
 //evaluate 2 values and return answer 
 const doOperations = {
     plus(x, y) {
@@ -50,7 +51,7 @@ function getNumbers(e) {
     if ((screen.innerText.length === 1 && screen.innerText == 0 && e.target.innerText !== ".")) {
         screen.innerText = ""
     }
-   
+
 
     if (e.target.innerText === ".") {
         point.disabled = true
@@ -103,11 +104,13 @@ function getNumbers(e) {
                 assign.removeEventListener("click", getsecondsNumber)
                 doEvaluation(x, y, currentOperator)
 
+
             }
 
         }
 
     }
+
     assign.addEventListener("click", getsecondsNumber)
 }
 
@@ -118,9 +121,8 @@ allOperates.forEach((operator) => {
     operator.addEventListener("click", getOperator)
 })
 function getOperator(e) {
-    allNumbers.forEach((number) => {
-        number.disabled = false
-    })
+    secondEvaluator++
+    console.log(secondEvaluator)
     sign.disabled = true
     if (answer == Infinity) {
         screen.innerText = "you broke math"
@@ -130,9 +132,32 @@ function getOperator(e) {
         count = 0
     }
     else {
-        if (e.target.id !== "negativetopositive") {
-            e.target.style.backgroundColor = "white"
-            e.target.style.color = "orange"
+        if (secondEvaluator === 2 || (secondEvaluator === 1 && tempOp === 1)) {
+            getBackgroundColor()
+            function getsecondsNumber() {
+                if (ary.length >= 2) {
+                    if (ary.length > 2) {
+                        temp = ary.slice(0)
+                        dump = ary.slice(-1)
+                        while (ary.length) {
+                            ary.pop()
+                        }
+                        let [z] = temp;
+                        let [e] = dump;
+                        ary.push(z)
+                        ary.push(e)
+                    }
+
+                    count++
+                    console.log(ary)
+                    let [x, y] = ary;
+                    assign.removeEventListener("click", getsecondsNumber)
+                    doEvaluation(x, y, currentOperator)
+                }
+            }
+            secondEvaluator = 0
+            tempOp = 0
+            getsecondsNumber()
         }
         point.disabled = false
         if (count === 0) {
@@ -143,6 +168,13 @@ function getOperator(e) {
         currentOperator = e.target.id
         state = true
         disable(state)
+        if (e.target.id !== "negativetopositive") {
+            e.target.style.backgroundColor = "white"
+            e.target.style.color = "orange"
+        }
+        allNumbers.forEach((number) => {
+            number.disabled = false
+        })
     }
 }
 //help to do the operation when we have 2 number in the array
@@ -167,7 +199,7 @@ function doEvaluation(num1, num2, currentOperator) {
     while (ary.length) {
         ary.pop()
     }
-
+    tempOp++
     state = false
     disable(state)
     ary.push(Math.round(answer * 100) / 100)
@@ -208,7 +240,11 @@ function clearer() {
     assign.disabled = true;
     getBackgroundColor()
     sign.disabled = true
-
+    secondEvaluator = 0
+    allNumbers.forEach((number) => {
+        number.disabled = false
+    })
+    tempOp=0
 }
 //disable button
 function disable(state) {
