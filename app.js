@@ -19,7 +19,7 @@ let minusOj = document.querySelector("#minus")
 let multiplyOj = document.querySelector("#mutiplay")
 let divideOJ = document.querySelector("#divide")
 let sign = document.querySelector("#negativetopositive")
-let tempOp;
+let tempOp = 0
 let cope = 0
 //evaluate 2 values and return answer 
 const doOperations = {
@@ -91,6 +91,8 @@ function getNumbers(e) {
 
         function getsecondsNumber() {
             if (ary.length >= 2) {
+                secondEvaluator = 0
+                cope++
                 if (ary.length > 2) {
                     temp = ary.slice(0)
                     dump = ary.slice(-1)
@@ -105,7 +107,6 @@ function getNumbers(e) {
                 count++
                 let [x, y] = ary;
                 assign.removeEventListener("click", getsecondsNumber)
-
                 doEvaluation(x, y, currentOperator)
 
 
@@ -126,17 +127,17 @@ allOperates.forEach((operator) => {
 })
 function getOperator(e) {
     secondEvaluator++
+    console.log(tempOp)
     console.log(secondEvaluator)
     sign.disabled = true
     if (answer == Infinity) {
         screen.innerText = "you broke math"
         evaluator = 0
         shower = 0
-        evaluator = 0
         count = 0
     }
     else {
-        if (secondEvaluator === 2 || (secondEvaluator === 1 && tempOp === 1)) {
+        if (secondEvaluator === 2 || secondEvaluator === 1 & tempOp === 1) {
             getBackgroundColor()
             function getsecondsNumber() {
                 if (ary.length >= 2) {
@@ -159,7 +160,7 @@ function getOperator(e) {
             }
             secondEvaluator = 0
             tempOp = 0
-
+            cope = 0
             getsecondsNumber()
         }
         point.disabled = false
@@ -206,7 +207,6 @@ function doEvaluation(num1, num2, currentOperator) {
     state = false
     disable(state)
     ary.push(Math.round(answer * 100) / 100)
-
     display()
 }
 // if you click = it will show you the answer
@@ -223,6 +223,10 @@ function display() {
             number.disabled = true
 
         })
+        if (cope === 1) {
+            tempOp = 0
+            cope = 0
+        }
 
     }
 
