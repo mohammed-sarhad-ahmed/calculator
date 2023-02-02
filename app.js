@@ -21,6 +21,7 @@ let divideOJ = document.querySelector("#divide")
 let sign = document.querySelector("#negativetopositive")
 let tempOp = 0
 let cope = 0
+const deleter = document.querySelector("#delete")
 //evaluate 2 values and return answer 
 const doOperations = {
     plus(x, y) {
@@ -46,7 +47,7 @@ allNumbers.forEach((number) => {
     number.addEventListener("click", getNumbers)
 })
 function getNumbers(e) {
-
+    deleter.disabled = false;
     state = false
     disable(state)
     if ((screen.innerText.length === 1 && screen.innerText == 0 && e.target.innerText !== ".")) {
@@ -76,13 +77,14 @@ function getNumbers(e) {
     else if (answer !== Infinity) {
         screen.innerText += e.target.dataset.value
         if (screen.innerText === ".") {
-            console.log("gay")
             screen.innerText = "0."
         }
 
         if (screen.innerText != 0) {
             sign.disabled = false
+            deleter.disabled = false;
         }
+
         if (ary.length >= 1) {
             ary.push(screen.innerText)
             assign.disabled = false;
@@ -126,6 +128,7 @@ allOperates.forEach((operator) => {
     operator.addEventListener("click", getOperator)
 })
 function getOperator(e) {
+    deleter.disabled = true;
     secondEvaluator++
     console.log(tempOp)
     console.log(secondEvaluator)
@@ -253,6 +256,7 @@ function clearer() {
         number.disabled = false
     })
     tempOp = 0
+    deleter.disabled = true;
     cope = 0
 }
 //disable button
@@ -297,4 +301,20 @@ function getSign(e) {
         ary.pop()
         ary.push(screen.innerText)
     }
+}
+//delete on 
+deleter.disabled = true;
+deleter.addEventListener("click", () => {
+    getDelete()
+})
+function getDelete() {
+    if (screen.innerText !== 0 && !(isNaN(screen.innerText))) {
+        screen.innerText = screen.innerText.slice(0, -1)
+        if (screen.innerText.length === 0 || screen.innerText === "-") {
+            screen.innerText = 0
+        }
+        ary.pop()
+        ary.push(screen.innerText)
+    }
+
 }
