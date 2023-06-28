@@ -1,72 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>calculator</title>
-        <link rel="stylesheet" href="app.css">
-    </head>
-
-    <body>
-        <main id="main">
-            <section id="screen">
-                <p>0</p>
-            </section>
-            <section id="all">
-                <section class="first gray">
-                    <button id="clear">C</button>
-                    <button id="negativetopositive">
-                        <p><sup>+</sup>
-                            /
-
-                            <sub>-</sub>
-                        </p>
-                    </button>
-                    <button id="delete">DEL</button>
-                    <button class="oparators" id="divide">&#247;</button>
-
-                </section>
-                <section class="first">
-                    <button class="numbers" data-value="7">7</button>
-                    <button class="numbers" data-value="8">8</button>
-                    <button class="numbers" data-value="9">9</button>
-                    <button class="oparators" id="mutiplay">&times;</button>
-
-                </section>
-                <section class="first">
-                    <button class="numbers" data-value="4">4</button>
-                    <button class="numbers" data-value="5">5</button>
-                    <button class="numbers" data-value="6">6</button>
-                    <button class="oparators" id="minus">&#8722;</button>
-
-                </section>
-
-                <section class="first">
-                    <button class="numbers" data-value="1">1</button>
-                    <button class="numbers" data-value="2">2</button>
-                    <button class="numbers" data-value="3">3</button>
-                    <button class="oparators" id="plus">+</button>
-
-                </section>
-                <section id="fifth">
-                    <button id="first" class="numbers" data-value="0">0</button>
-                    <button class="numbers" id="point" data-value=".">.</button>
-                    <button id="assgiment">&#61</button>
-
-                </section>
-            </section>
-
-
-
-
-        </main>
-
-
-
-
-        <script src="app.js"></script>
-    </body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>calculator</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="main.js"></script>
+  </head>
+  <body>
+    <section class="screen-container">
+      <p id="Screen">0</p>
+    </section>
+    <section class="button-container button-container_1">
+      <button class="button Grey-color__buttons" id="AC">AC</button>
+      <button class="button Grey-color__buttons" id="negation">+/-</button>
+      <button class="button Grey-color__buttons" id="delete">X</button>
+      <button class="button Math-sign" data-math="/">÷</button>
+    </section>
+    <section class="button-container button-container_2">
+      <button class="button number">7</button>
+      <button class="button number">8</button>
+      <button class="button number">9</button>
+      <button class="button Math-sign" data-math="*">&times;</button>
+    </section>
+    <section class="button-container button-container_3">
+      <button class="button number">4</button>
+      <button class="button number">5</button>
+      <button class="button number">6</button>
+      <button class="button Math-sign" data-math="-">&minus;</button>
+    </section>
+    <section class="button-container button-container_4">
+      <button class="button number">1</button>
+      <button class="button number">2</button>
+      <button class="button number">3</button>
+      <button class="button Math-sign" data-math="+">+</button>
+    </section>
+    <section class="button-container button-container_5">
+      <button class="button number" id="zero">0</button>
+      <button class="button number">.</button>
+      <button class="button Math-sign" id="equal">=</button>
+    </section>
+  </body>
 </html>
