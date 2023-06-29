@@ -128,7 +128,11 @@ function deleter(e) {
     values.push("0");
     return;
   }
-  if (e.target.innerText === "X" || e.key === "Backspace") {
+  if (
+    e.target.innerText === "X" ||
+    e.key === "Backspace" ||
+    e.target.parentElement?.classList.contains("screen-container")
+  ) {
     let currentText = screen.innerText;
     if (currentText.includes("-") && currentText.length === 2)
       currentText = String(Math.abs(Number(currentText)));
@@ -156,3 +160,4 @@ clearButton.addEventListener("click", initialState);
 document.querySelector("#negation").addEventListener("click", negator);
 deleteButton.addEventListener("click", deleter);
 document.addEventListener("keydown", deleter);
+window.addEventListener("touchmove", deleter);
