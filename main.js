@@ -1,5 +1,7 @@
 "use strict";
 //declarations
+let StartPosition = 0;
+let swap = false;
 const values = ["0"];
 const sign = [];
 const deleteButton = document.getElementById("delete");
@@ -128,11 +130,8 @@ function deleter(e) {
     values.push("0");
     return;
   }
-  if (
-    e.target.innerText === "X" ||
-    e.key === "Backspace" ||
-    e.target.parentElement?.classList.contains("screen-container")
-  ) {
+  if (e?.target.innerText === "X" || e?.key === "Backspace" || swap) {
+    swap && (swap = false);
     let currentText = screen.innerText;
     if (currentText.includes("-") && currentText.length === 2)
       currentText = String(Math.abs(Number(currentText)));
@@ -151,6 +150,20 @@ function deleter(e) {
     screen.innerText === "0" && (clearButton.innerText = "AC");
   }
 }
+
+function swapStart(e) {
+  if (e.touches.length === 1 && e.target.closest("p")) {
+    StartPosition = e.touches[0].clientX;
+  }
+}
+function swapEnd(e) {
+  const offSet = 100;
+  if (StartPosition && e?.changedTouches[0].clientX - StartPosition >= offSet) {
+    swap = true;
+    StartPosition = 0;
+  }
+  deleter();
+}
 //events
 document.body.addEventListener("click", (e) => {
   if (!e.target.classList.contains("button")) return;
@@ -162,4 +175,5 @@ clearButton.addEventListener("click", initialState);
 document.querySelector("#negation").addEventListener("click", negator);
 deleteButton.addEventListener("click", deleter);
 document.addEventListener("keydown", deleter);
-window.addEventListener("touchend", deleter);
+window.addEventListener("touchstart", swapStart);
+window.addEventListener("touchend", swapEnd);
