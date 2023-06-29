@@ -158,7 +158,7 @@ function swapStart(e) {
   }
 }
 function swapEnd(e) {
-  const offSet = 100;
+  const offSet = 10;
   if (StartPosition && e?.changedTouches[0].clientX - StartPosition >= offSet) {
     swap = true;
     StartPosition = 0;
