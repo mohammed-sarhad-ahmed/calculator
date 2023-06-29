@@ -154,12 +154,15 @@ function deleter(e) {
 
 function swapStart(e) {
   if (e.touches.length === 1 && e.target.closest("p")) {
-    StartPosition = e.touches[0].clientX;
+    StartPosition = e.touches[0]?.clientX;
   }
 }
 function swapEnd(e) {
   const offSet = 10;
-  if (StartPosition && e?.changedTouches[0].clientX - StartPosition >= offSet) {
+  if (
+    StartPosition &&
+    Math.abs(e.changedTouches[0]?.clientX - StartPosition) >= offSet
+  ) {
     swap = true;
     StartPosition = 0;
   }
