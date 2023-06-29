@@ -147,6 +147,8 @@ function deleter(e) {
       currentNumber = currentNumber.join("");
       values.push(currentNumber);
     }
+
+    screen.innerText === "0" && (clearButton.innerText = "AC");
   }
 }
 //events
