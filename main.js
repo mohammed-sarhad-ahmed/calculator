@@ -160,4 +160,4 @@ clearButton.addEventListener("click", initialState);
 document.querySelector("#negation").addEventListener("click", negator);
 deleteButton.addEventListener("click", deleter);
 document.addEventListener("keydown", deleter);
-window.addEventListener("touchmove", deleter);
+window.addEventListener("touchend", deleter);
