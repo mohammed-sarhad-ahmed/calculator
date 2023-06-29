@@ -130,6 +130,7 @@ function deleter(e) {
     values.push("0");
     return;
   }
+  console.log(swap);
   if (e?.target.innerText === "X" || e?.key === "Backspace" || swap) {
     swap && (swap = false);
     let currentText = screen.innerText;
