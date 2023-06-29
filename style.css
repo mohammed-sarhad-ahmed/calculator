@@ -75,7 +75,20 @@ body {
     justify-content: center;
   }
   body {
-    width: 60%;
-    height: 60%;
+    margin-top: 7%;
+    width: 20%;
+    height: 50%;
+  }
+  .button {
+    font-size: larger;
+    border-radius: 70%;
+    height: 80%;
+    width: 70%;
+  }
+  .button-container_5 .button {
+    font-size: larger;
+    border-radius: 50%;
+    height: 100%;
+    width: 80%;
   }
 }

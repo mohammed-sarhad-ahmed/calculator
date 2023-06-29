@@ -97,6 +97,7 @@ function signMangement(target) {
 }
 
 function valueMangement(target) {
+  if (screen.innerText.includes(".") && target.innerText === ".") return;
   if (target.classList.contains("number")) {
     clearButton.innerText = "C";
     if (screen.innerText === "0" && target.innerText !== ".")
@@ -123,21 +124,25 @@ function negator() {
 }
 
 function deleter(e) {
-  if (!values.length || !e.key === "Backspace" || !e.target.innerText === "X")
+  if (screen.innerText === "0") {
+    values.push("0");
     return;
-  let currentText = screen.innerText;
-  if (currentText.includes("-") && currentText.length === 2)
-    currentText = String(Math.abs(Number(currentText)));
-  currentText = currentText.split("");
-  currentText.pop();
-  currentText = currentText.join("");
-  screen.innerText = currentText ? currentText : 0;
-  let currentNumber = values.pop();
-  if (currentNumber.length > 1) {
-    currentNumber = currentNumber.split("");
-    currentNumber.pop();
-    currentNumber = currentNumber.join("");
-    values.push(currentNumber);
+  }
+  if (e.target.innerText === "X" || e.key === "Backspace") {
+    let currentText = screen.innerText;
+    if (currentText.includes("-") && currentText.length === 2)
+      currentText = String(Math.abs(Number(currentText)));
+    currentText = currentText.split("");
+    currentText.pop();
+    currentText = currentText.join("");
+    screen.innerText = currentText ? currentText : 0;
+    let currentNumber = values.pop();
+    if (currentNumber.length > 1) {
+      currentNumber = currentNumber.split("");
+      currentNumber.pop();
+      currentNumber = currentNumber.join("");
+      values.push(currentNumber);
+    }
   }
 }
 //events
