@@ -3,6 +3,8 @@
 let StartPosition = 0;
 let swap = false;
 const values = ["0"];
+const scrollX = 0;
+const scrollY = 0;
 const sign = [];
 const deleteButton = document.getElementById("delete");
 const clearButton = document.querySelector("#AC");
@@ -133,7 +135,6 @@ function deleter(e) {
   if (!isFinite(screen.innerText)) return;
 
   if (screen.innerText === "0") {
-    console.log(values.length);
     values.length === 0 && values.push("0");
     return;
   }
@@ -178,6 +179,14 @@ function swapEnd(e) {
     deleter();
   }
 }
+
+function selectDisable(e) {
+  e.preventDefault();
+}
+
+function preventScroll(e) {
+  window.scrollTo(0, 0);
+}
 //events
 document.body.addEventListener("click", (e) => {
   if (!e.target.classList.contains("button")) return;
@@ -191,3 +200,5 @@ deleteButton.addEventListener("click", deleter);
 document.addEventListener("keydown", deleter);
 window.addEventListener("touchstart", swapStart);
 window.addEventListener("touchend", swapEnd);
+document.addEventListener("selectstart", selectDisable);
+window.addEventListener("scroll", preventScroll);
